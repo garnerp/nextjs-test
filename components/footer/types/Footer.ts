@@ -1,5 +1,3 @@
-
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
@@ -78,88 +76,8 @@ export interface Footer_globalFooter {
 }
 
 export interface Footer {
-  globalFooter: Footer_globalFooter | null;  // Returns the single instance record
+  /**
+   * Returns the single instance record
+   */
+  globalFooter: Footer_globalFooter | null;
 }
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: BlogPost
-// ====================================================
-
-export interface BlogPost_blogPost_author_photo {
-  __typename: "FileField";
-  url: string | null;
-}
-
-export interface BlogPost_blogPost_author {
-  __typename: "PersonRecord";
-  id: any;
-  name: string | null;
-  photo: BlogPost_blogPost_author_photo | null;
-}
-
-export interface BlogPost_blogPost {
-  __typename: "BlogPostRecord";
-  id: any;
-  slug: string | null;
-  body: string | null;
-  date: any | null;
-  author: BlogPost_blogPost_author | null;
-}
-
-export interface BlogPost {
-  blogPost: BlogPost_blogPost | null;  // Returns a specific record
-}
-
-export interface BlogPostVariables {
-  slug: string;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: PersonFields
-// ====================================================
-
-export interface PersonFields_photo {
-  __typename: "FileField";
-  url: string | null;
-}
-
-export interface PersonFields {
-  __typename: "PersonRecord";
-  id: any;
-  name: string | null;
-  photo: PersonFields_photo | null;
-}
-
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL fragment: LinkFields
-// ====================================================
-
-export interface LinkFields {
-  __typename: "LinkRecord";
-  external: any | null;
-  title: string | null;
-  url: string | null;
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-//==============================================================
-// START Enums and Input Objects
-//==============================================================
-
-//==============================================================
-// END Enums and Input Objects
-//==============================================================

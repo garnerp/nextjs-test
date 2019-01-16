@@ -1,10 +1,10 @@
 import { Component } from 'react'
 import { ChildProps, graphql } from 'react-apollo'
-import { Footer as IFooter } from '../../types/models'
-import getFooterQuery from './getFooter.graphql'
+import getFooterQuery from './query.graphql'
 import './style.css'
+import { Footer as FooterFields } from './types/Footer'
 
-class Footer extends Component<ChildProps<{}, IFooter>, {}> {
+class Footer extends Component<ChildProps<{}, FooterFields>, {}> {
   public render() {
     const { globalFooter } = this.props.data
 
@@ -156,6 +156,4 @@ class Footer extends Component<ChildProps<{}, IFooter>, {}> {
   }
 }
 
-const FooterWithData = graphql<{}, IFooter>(getFooterQuery)(Footer)
-
-export default FooterWithData
+export default graphql<{}, FooterFields>(getFooterQuery)(Footer)

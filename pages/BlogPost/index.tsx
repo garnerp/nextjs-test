@@ -1,11 +1,14 @@
 import { NextContext } from 'next'
 import { Component } from 'react'
 import { ChildProps, graphql } from 'react-apollo'
-import Person from '../../components/Person'
-import { BlogPost as IBlogPost, BlogPostVariables } from '../../types/models'
+import AuthorCard from '../../components/author-card'
 import getBlogPostQuery from './getBlogPost.graphql'
+import { BlogPost as BlogPostFields, BlogPostVariables } from './types/BlogPost'
 
-class BlogPost extends Component<ChildProps<BlogPostVariables, IBlogPost>, {}> {
+class BlogPost extends Component<
+  ChildProps<BlogPostVariables, BlogPostFields>,
+  {}
+> {
   public static async getInitialProps(context: NextContext) {
     const slug = context.asPath.replace(/^\/blog\//, '')
     return { slug }
@@ -19,13 +22,13 @@ class BlogPost extends Component<ChildProps<BlogPostVariables, IBlogPost>, {}> {
         <p>{error ? `Error: ${error}` : ''}</p>
         <p>{loading ? 'Loading...' : ''}</p>
         <p>{JSON.stringify(blogPost)}</p>
-        {blogPost && blogPost.author && <Person person={blogPost.author} />}
+        {blogPost && blogPost.author && <AuthorCard id={blogPost.author.id} />}
       </div>
     )
   }
 }
 
-const BlogPostWithData = graphql<BlogPostVariables, IBlogPost>(
+const BlogPostWithData = graphql<BlogPostVariables, BlogPostFields>(
   getBlogPostQuery,
   {
     options: ({ slug }) => ({ variables: { slug } })

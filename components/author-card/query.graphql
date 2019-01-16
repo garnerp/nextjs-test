@@ -1,0 +1,9 @@
+query Person($id: ItemId!) {
+  person(filter: { id: { eq: $id } }) {
+    id
+    name
+    photo {
+      url
+    }
+  }
+}
