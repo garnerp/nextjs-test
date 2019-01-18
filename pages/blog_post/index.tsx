@@ -28,11 +28,6 @@ class BlogPost extends Component<
   }
 }
 
-const BlogPostWithData = graphql<BlogPostVariables, BlogPostFields>(
-  getBlogPostQuery,
-  {
-    options: ({ slug }) => ({ variables: { slug } })
-  }
-)(BlogPost)
-
-export default BlogPostWithData
+export default graphql<BlogPostVariables, BlogPostFields>(getBlogPostQuery, {
+  options: ({ slug }) => ({ variables: { slug } })
+})(BlogPost)

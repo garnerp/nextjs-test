@@ -9,11 +9,10 @@ const gql = require('graphql-tag')
 const config = {
   async exportPathMap() {
     const items = await loadFromDato()
-    console.log(JSON.stringify(items, null, 2))
     return items.reduce(
       (acc, post) => {
         acc[`/blog/${post.slug}`] = {
-          page: '/BlogPost',
+          page: '/blog_post',
           query: post.id
         }
         return acc
@@ -54,7 +53,7 @@ function loadFromDato() {
     .query({
       query: gql`
         query CoolBlogPosts {
-          allBlogPosts(first: 3) {
+          allBlogPosts(first: 10) {
             id
             slug
           }
