@@ -2,7 +2,7 @@ import { NextContext } from 'next'
 import { Component } from 'react'
 import { ChildProps, graphql } from 'react-apollo'
 import AuthorCard from '../../components/author-card'
-import getBlogPostQuery from './getBlogPost.graphql'
+import blogPostQuery from './query.graphql'
 import { BlogPost as BlogPostFields, BlogPostVariables } from './types/BlogPost'
 
 class BlogPost extends Component<
@@ -28,6 +28,6 @@ class BlogPost extends Component<
   }
 }
 
-export default graphql<BlogPostVariables, BlogPostFields>(getBlogPostQuery, {
+export default graphql<BlogPostVariables, BlogPostFields>(blogPostQuery, {
   options: ({ slug }) => ({ variables: { slug } })
 })(BlogPost)
