@@ -52,7 +52,7 @@ function loadFromDato() {
   return getClient()
     .query({
       query: gql`
-        query CoolBlogPosts {
+        query BlogPosts {
           allBlogPosts(first: 10) {
             id
             slug
@@ -62,7 +62,7 @@ function loadFromDato() {
     })
     .then(resp => resp.data.allBlogPosts)
     .catch(err => {
-      console.warn(`Jeff ruined this script.`, err)
+      console.warn(`Error loading blog post routes from Dato`, err)
     })
 }
 
