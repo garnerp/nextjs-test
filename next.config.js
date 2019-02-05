@@ -53,7 +53,7 @@ function loadFromDato() {
     .query({
       query: gql`
         query BlogPosts {
-          allBlogPosts(first: 10) {
+          allBlogPosts(first: 100) {
             id
             slug
           }
