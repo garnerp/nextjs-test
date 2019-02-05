@@ -8,7 +8,7 @@
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "marked": "0.6.0",
-    "next": "^7.0.2",
+    "next": "canary",
     "next-plugin-graphql": "0.0.2",
     "node-fetch": "^2.3.0",
     "object-assign": "^4.1.1",
