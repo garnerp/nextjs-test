@@ -1,18 +1,31 @@
 const nextPlugins = require('./lib/next-plugins')
-const bundleAnalyzerPlugin = require('@zeit/next-bundle-analyzer')
+const bundleAnalyzerPlugin = require('./lib/next-plugin-bundle-analyzer')
+const graphqlPlugin = require('next-plugin-graphql')
 const cssPlugin = require('@zeit/next-css')
 const typescriptPlugin = require('@zeit/next-typescript')
-const path = require('path')
-const getClient = require('./lib/apolloClient')
-const graphqlPlugin = require('next-plugin-graphql')
+const hashicorpPlugin = require('./lib/next-plugin-hashicorp')
+const DatoClient = require('./lib/dato-client')
 const gql = require('graphql-tag')
 
 module.exports = nextPlugins(
-  [typescriptPlugin, graphqlPlugin, cssPlugin, bundleAnalyzerPlugin],
+  // I think that probably the hashicorp plugin should include all of these
+  // other plugins, so that we are standard across all projects, and only
+  // plugins that are unique to a specific site should be here. We can make
+  // that change in this PR or in a future one, just getting started here : )
+  [
+    hashicorpPlugin(),
+    bundleAnalyzerPlugin,
+    cssPlugin,
+    graphqlPlugin,
+    typescriptPlugin
+  ],
   {
     async exportPathMap() {
-      const items = await loadFromDato()
-      return items.reduce(
+      // This will be a common routing pattern, and I think it would be
+      // beneficial to add some sort of "routes generated from dato collection"
+      // helper to make this cleaner
+      const blogPostQuery = await loadBlogPosts(100)
+      return blogPostQuery.allBlogPosts.reduce(
         (acc, post) => {
           acc[`/blog/${post.slug}`] = {
             page: '/blog_post',
@@ -22,50 +35,23 @@ module.exports = nextPlugins(
         },
         { '/': { page: '/' } }
       )
-    },
-    pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
-    analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
-    analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
-    bundleAnalyzerConfig: {
-      server: {
-        analyzerMode: 'static',
-        reportFilename: '../../bundles/server.html'
-      },
-      browser: {
-        analyzerMode: 'static',
-        reportFilename: '../bundles/client.html'
-      }
-    },
-    // setup for markdown file loading
-    webpack: config => {
-      config.module.rules.push({
-        test: /\.mdx?$/,
-        use: [
-          'babel-loader',
-          '@mdx-js/loader',
-          path.join(__dirname, 'lib/mdx-layout-loader')
-        ]
-      })
-      config.resolve.symlinks = false
-      return config
     }
   }
 )
 
-function loadFromDato() {
-  return getClient()
-    .query({
-      query: gql`
-        query BlogPosts {
-          allBlogPosts(first: 100) {
-            id
-            slug
-          }
-        }
-      `
-    })
-    .then(resp => resp.data.allBlogPosts)
-    .catch(err => {
-      console.warn(`Error loading blog post routes from Dato`, err)
-    })
+//
+// Data loading from Dato
+//
+
+const datoClient = new DatoClient()
+
+function loadBlogPosts(number) {
+  return datoClient.load(gql`
+    query BlogPosts {
+      allBlogPosts(first: ${number}) {
+        id
+        slug
+      }
+    }
+  `)
 }
