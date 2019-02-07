@@ -9,7 +9,7 @@ const bundleAnalyzer = require('@zeit/next-bundle-analyzer')
 // properties below to avoid copy-pasting and extra boilerplate for the user.
 // Someday, I'd like to pull request this change to the original plugin, but
 // for now this will do.
-module.exports = function bundleAnalyzerPlugin(config) {
+module.exports = function bundleAnalyzerPlugin(config: any) {
   config.analyzeServer = ['server', 'both'].includes(process.env.BUNDLE_ANALYZE)
   config.analyzeBrowser = ['browser', 'both'].includes(
     process.env.BUNDLE_ANALYZE

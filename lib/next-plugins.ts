@@ -32,7 +32,11 @@
 // so post conversion everything should make perfect sense -- plugins are
 // executed in exactly the order they are seen in the array.
 
-module.exports = function nextPlugins(plugins, config = {}) {
+module.exports = function nextPlugins(
+  // TODO: would like to get a typing from next for the config object
+  plugins: Array<(config: any) => object>,
+  config = {}
+) {
   // For the initial config, extract the webpack function so it is not clobbered
   // by plugin-added webpack configs
   let result = extractWebpackModification(config)
@@ -45,12 +49,12 @@ module.exports = function nextPlugins(plugins, config = {}) {
 
   // Apply webpack function modifications
   // TODO: in theory the config mod should be applied last, but currently is
-  // applied first
+  // applied first, so if there's a conflict it will be lowest priority merged
   if (webpackModifications.length) {
-    result.webpack = function(config, options) {
+    result.webpack = (webpackConfig: any, options: any) => {
       return webpackModifications.reduce(
         (acc, mod) => mod(acc, options),
-        config
+        webpackConfig
       )
     }
   }
@@ -63,7 +67,7 @@ module.exports = function nextPlugins(plugins, config = {}) {
 // cannot be merged for obvious reasons. To solve this, we store each webpack
 // config mod function, and return a function that applies each in order.
 const webpackModifications = []
-function extractWebpackModification(result) {
+function extractWebpackModification(result: any) {
   if (result.webpack) {
     webpackModifications.push(result.webpack)
     delete result.webpack

@@ -1,11 +1,11 @@
 const path = require('path')
 
 // TODO: Write a little readme for this plugin
-module.exports = function hashicorpPlugin(pluginOptions = {}) {
-  return function hashicorpPluginInternal(nextConfig = {}) {
+module.exports = function hashicorpPlugin() {
+  return function hashicorpPluginInternal(nextConfig: any = {}) {
     return Object.assign({}, nextConfig, {
       pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
-      webpack(config, options) {
+      webpack(config: any, options: any) {
         config.module.rules.push({
           test: /\.mdx$/,
           use: [
