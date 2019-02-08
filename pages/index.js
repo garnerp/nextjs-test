@@ -1,4 +1,5 @@
 import '../components/global-styles/playground.css'
+import NextSEO from 'next-seo'
 
 import Button from '../components/button'
 import SectionHeader from '../components/section-header'
@@ -12,6 +13,12 @@ import Footer from '../components/footer'
 
 const Index = () => (
   <div>
+    <NextSEO
+      config={{
+        title: 'Index Page',
+        description: 'A short description goes here.',
+      }}
+    />
     <h3>Next.js Component Library 🙌🏼</h3>
 
     <ul>
@@ -62,7 +69,11 @@ const Index = () => (
       </li>
     </ul>
 
+    <p>optimized image loader</p>
     <img src={require('../assets/img/chungus.jpg')} />
+
+    <p>environment variable reflection</p>
+    <p>{JSON.stringify(process.env)}</p>
 
     <Footer />
   </div>

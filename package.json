@@ -11,6 +11,7 @@
     "next": "^7.0.2",
     "next-optimized-images": "^2.3.3",
     "next-plugin-graphql": "0.0.2",
+    "next-seo": "^1.10.0",
     "node-fetch": "^2.3.0",
     "object-assign": "^4.1.1",
     "query-string": "^5.1.1",
