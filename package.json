@@ -54,7 +54,7 @@
     "static": "next build && next export",
     "start": "next start",
     "lint": "tslint --fix -c tslint.json '**/*{.ts,.tsx}'",
-    "generate:component": "node ./scripts/generators/component/index.js"
+    "generate:component": "next-hashicorp generate"
   },
   "husky": {
     "hooks": {

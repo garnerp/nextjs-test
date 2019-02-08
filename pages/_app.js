@@ -1,8 +1,7 @@
 import React from 'react'
 import App, { Container } from 'next/app'
 import { ApolloProvider } from 'react-apollo'
-import getClient from '../lib/apolloClient'
-import delphi from '../lib/delphi'
+import withApollo from '@hashicorp/next-hashicorp/dist/client'
 
 import '../components/global-styles/base.global.css'
 import '../components/global-styles/typography.global.css'
@@ -22,4 +21,4 @@ class NextApp extends App {
   }
 }
 
-export default delphi(NextApp)
+export default withApollo(NextApp)

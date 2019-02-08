@@ -1,10 +1,5 @@
-const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
-const withCSS = require('@zeit/next-css')
-const withTypescript = require('@zeit/next-typescript')
-const getClient = require('./lib/apolloClient')
-const withGraphql = require('next-plugin-graphql')
 const gql = require('graphql-tag')
-const withHashicorp = require('@hashicorp/next-hashicorp')
+const { withHashicorp, apolloClient } = require('@hashicorp/next-hashicorp')
 
 const config = {
   async exportPathMap() {
@@ -19,24 +14,11 @@ const config = {
       },
       { '/': { page: '/' } }
     )
-  },
-  pageExtensions: ['js', 'jsx', 'tsx', 'mdx'],
-  analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
-  analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
-  bundleAnalyzerConfig: {
-    server: {
-      analyzerMode: 'static',
-      reportFilename: '../../bundles/server.html'
-    },
-    browser: {
-      analyzerMode: 'static',
-      reportFilename: '../bundles/client.html'
-    }
   }
 }
 
 function loadFromDato() {
-  return getClient()
+  return apolloClient()
     .query({
       query: gql`
         query BlogPosts {
@@ -53,6 +35,6 @@ function loadFromDato() {
     })
 }
 
-module.exports = withTypescript(
-  withGraphql(withCSS(withBundleAnalyzer(withHashicorp(config))))
-)
+console.log(withHashicorp(config))
+
+module.exports = withHashicorp(config)
