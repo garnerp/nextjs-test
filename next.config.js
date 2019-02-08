@@ -35,6 +35,4 @@ function loadFromDato() {
     })
 }
 
-console.log(withHashicorp(config))
-
 module.exports = withHashicorp(config)

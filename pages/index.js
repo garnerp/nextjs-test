@@ -62,6 +62,8 @@ const Index = () => (
       </li>
     </ul>
 
+    <img src={require('../assets/img/chungus.jpg')} />
+
     <Footer />
   </div>
 )
