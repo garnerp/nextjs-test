@@ -44,6 +44,11 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "license": "ISC",
   "main": "index.js",
   "scripts": {
@@ -51,14 +56,9 @@
     "build": "next build",
     "dev": "next",
     "export": "next export",
-    "static": "next build && next export",
-    "start": "next start",
+    "generate:component": "node ./scripts/generators/component/index.js",
     "lint": "tslint --fix -c tslint.json '**/*{.ts,.tsx}'",
-    "generate:component": "node ./scripts/generators/component/index.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
+    "start": "next start",
+    "static": "next build && next export"
   }
 }
